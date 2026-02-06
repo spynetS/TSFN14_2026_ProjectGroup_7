@@ -39,7 +39,7 @@ router.get("/test", async (req: Request, res: Response) => {
 
 router.get("/get-user", (req: Request, res: Response) => {
   try {
-    console.log(req.session.userId);
+//    console.log(req.session.userId);
 
     User.findById(req.session.userId)
       .populate("weightLogs")

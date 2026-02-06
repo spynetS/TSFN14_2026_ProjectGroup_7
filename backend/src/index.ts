@@ -15,7 +15,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const DATABASE_URI = process.env.DATABASE_URI
-console.log(DATABASE_URI)
 
 // Middleware
 if (process.env.NODE_ENV === "test") {
@@ -50,10 +49,10 @@ export default app; // ✅ export app for Supertest
 // Only start server if running node directly
 if (require.main === module) {
   init(process.env.DATABASE_URI!).then(() => {
-    app.listen(port, () =>
-      console.log(`Server running at http://localhost:${port}`),
+    app.listen(port, () =>{}
+//      console.log(`Server running at http://localhost:${port}`),
     );
 		}).catch(error=>{
-		console.log("Could not init database. Have .env?")
+//		console.log("Could not init database. Have .env?")
 		})
 }

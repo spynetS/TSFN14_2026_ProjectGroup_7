@@ -17,7 +17,7 @@ export default function Profile() {
   }, []);
 
   const handleSubmit = async (): Promise<void> => {
-    console.log("Submitted!");
+		//    console.log("Submitted!");
   };
 
   const lastWeight =

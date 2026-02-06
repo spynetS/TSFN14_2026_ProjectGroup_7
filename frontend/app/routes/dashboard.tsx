@@ -34,8 +34,6 @@ const Dashboard = () => {
   const [weight, setWeight] = useState<string>("");
   const [graphTab, setGraphTab] = useState<number>(0);
 
-	console.log("What the fuck");
-	
 	useEffect(() => {
 		fetchData();
 	}, []);
@@ -92,7 +90,6 @@ const Dashboard = () => {
 				});
 			});
 
-			console.log(datas)
 			setGraphStrength(datas)
 		})
 	}

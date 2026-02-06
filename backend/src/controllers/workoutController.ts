@@ -44,8 +44,6 @@ export async function createWorkout(req: e.Request, res: e.Response) {
 
   body.user = user._id; // now safe
 
-  console.log(body);
-
   Workout.create(body)
     .then((status) => {
       res.json(new ApiResponse({ data: status }));
