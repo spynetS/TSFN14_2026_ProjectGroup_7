@@ -3,7 +3,7 @@ import ApiResponse from "../database/response";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { makeCode } from "./friendsController";
-import { calculateStrength } from "../database/stats";
+import { _calculateStrength } from "../database/stats";
 
 // Added Login
 

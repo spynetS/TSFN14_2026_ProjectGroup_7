@@ -7,8 +7,8 @@ import { IoMdNotifications } from "react-icons/io";
 
 export default function Profile() {
   const [user, setUser] = useState<User | null>(null);
-  const [weightGoal, setWeightGoal] = useState<string>("");
-  const [strengthGoal, setStrengthGoal] = useState<string>("");
+  const [_weightGoal, _setWeightGoal] = useState<string>("");
+  const [_strengthGoal, _setStrengthGoal] = useState<string>("");
 
   useEffect(() => {
     apiFetch("/api/get-user").then((response) => {
@@ -16,10 +16,10 @@ export default function Profile() {
     });
   }, []);
 
-  const handleSubmit = async (): Promise<void> => {
-		//    console.log("Submitted!");
-  };
 
+  const _handleSubmit = async (): Promise<void> => {
+		//    console.log("Submitted!");
+	}
   const lastWeight =
     user?.weightLogs && user.weightLogs.length > 0
       ? user.weightLogs[user.weightLogs.length - 1].weight

@@ -19,7 +19,7 @@ export async function canDo(user: User, modelType: string, action: string): Prom
 
 export async function setNewPermission(user: User,modelType:string, action: string, ) {
 
-		const permission = await Permission.create({
+		const _permission = await Permission.create({
     action: action,
     user: user._id,
     modelType: modelType,
