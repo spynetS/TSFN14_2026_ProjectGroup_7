@@ -94,7 +94,7 @@ export async function createSet(req: e.Request, res: e.Response) {
             await strengthGoal.save();
         }
 
-    } catch (error: any) {
+    } catch (error) {
         res
             .status(500)
             .json(new ApiResponse({ status: "error", message: error.message }));
