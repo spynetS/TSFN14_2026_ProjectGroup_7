@@ -58,7 +58,7 @@ if (require.main === module) {
     app.listen(port, () =>
       logger.info(`Server running at http://localhost:${port}`),
     );
-		}).catch(error=>{
-		logger.error("Could not init database. Have .env?")
-		})
+  }).catch(error => {
+    logger.error("Could not init database. Have .env?", error);
+  });
 }
