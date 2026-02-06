@@ -3,7 +3,7 @@ import ApiResponse from "../database/response";
 import { Request, Response } from "express";
 
 import stats from "../database/stats";
-import { canDo } from "./permissionController";
+import { _canDo } from "./permissionController";
 
 import stats, { getStrengthProgress } from "../database/stats";
 import { Goal } from "../models/User";

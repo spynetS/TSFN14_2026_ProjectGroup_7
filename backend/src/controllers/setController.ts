@@ -6,7 +6,7 @@ import { getStrengthProgress } from "../database/stats";
 import User from "../models/User";
 import ExerciseTemplate from "../models/ExerciseTemplate";
 
-import stats, { calculateStrength } from "../database/stats";
+import _stats, { calculateStrength } from "../database/stats";
 import User from "../models/User";
 import { addXp } from "./userController"
 

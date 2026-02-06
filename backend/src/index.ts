@@ -53,7 +53,7 @@ if (require.main === module) {
     app.listen(port, () =>
       console.log(`Server running at http://localhost:${port}`),
     );
-		}).catch(error=>{
+		}).catch(_error=>{
 		console.log("Could not init database. Have .env?")
 		})
 }
