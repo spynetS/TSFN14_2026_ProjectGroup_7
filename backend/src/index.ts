@@ -1,16 +1,12 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
-import apiRouter from "./routes/api";
-
-import { init } from "./database/database";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import apiRouter from "./routes/api";
 import { init } from "./database/database";
 import logger from "./utils/logger"; // HIIIIII
-
 import dotenv from "dotenv";
-import type NextFunction = require("express");
+
 dotenv.config();
 
 const app = express();
