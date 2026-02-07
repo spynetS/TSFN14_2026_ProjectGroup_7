@@ -16,10 +16,10 @@ export default function Profile() {
     });
   }, []);
 
-  const _handleSubmit = async (): Promise<void> => {
-    console.log("Submitted!");
-  };
 
+  const _handleSubmit = async (): Promise<void> => {
+		//    console.log("Submitted!");
+	}
   const lastWeight =
     user?.weightLogs && user.weightLogs.length > 0
       ? user.weightLogs[user.weightLogs.length - 1].weight

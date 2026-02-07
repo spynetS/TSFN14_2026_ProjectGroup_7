@@ -40,7 +40,6 @@ export async function getNotifications(req: Request, res: Response) {
 
 
     const user: User = await User.findById(userId).populate("friends");
-    console.log(user)
 
     await user.friends.forEach(async (friend: User) => {
       if(await trainedToday(friend._id)){
@@ -50,7 +49,6 @@ export async function getNotifications(req: Request, res: Response) {
           message: `${shown} has trained—you should do that too!`,
           kind: "success",
         });
-        console.log(notifications)
       }
       })
     

@@ -130,7 +130,6 @@ export async function addXp (user:User, xp:number) {
 	user.xp += xp;
 
 	const xp_needed = 100 * ( (user.level ?? 0) ** 2 );
-	console.log(xp_needed)
 	
 	if(user.xp >= xp_needed){
 		user.level ++;
