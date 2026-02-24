@@ -14,7 +14,6 @@ import { addXp } from "./userController"
 export async function getSets(req: e.Request, res: e.Response) {
 		try {
 				const targetUserId = req.body.user || req.session.userId;
-				console.log(targetUserId)
 				if (!targetUserId) {
 						return res
 								.status(401)
