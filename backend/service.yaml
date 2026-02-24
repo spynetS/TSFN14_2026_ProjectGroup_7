@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fittnessduel-service
+  namespace: default
 spec:
   selector:
     app: fittnessduel
