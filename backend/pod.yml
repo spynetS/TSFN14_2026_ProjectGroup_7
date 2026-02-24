@@ -9,10 +9,11 @@ spec:
   - name: fittnessduel-pod
     image: fittnessduel-backend:latest
     imagePullPolicy: Never
+    restartPolicy: OnFailure
     ports:
     - containerPort: 3000
     env:
     - name: PORT
       value: "3000"
     - name: DATABASE_URI
-      value: "mongodb://root:example@193.11.7.248:27017/mydb?authSource=admin"
+      value: "mongodb://root:example@192.168.1.170:27017/mydb?authSource=admin"
