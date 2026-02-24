@@ -35,8 +35,6 @@ export async function lbFriends(req: Request, res: Response) {
         for (const goal of user.goals) {
           if (goal.achieved) continue;
 
-          console.log(goal);
-
           const progress = Math.min(
             100,
             Math.max(

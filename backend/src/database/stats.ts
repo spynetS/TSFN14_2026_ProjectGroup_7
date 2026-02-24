@@ -123,6 +123,5 @@ export async function getStrengthProgress(
 
 export async function getTotalStrengthProgress(userId: number) {
   const progress = await getStrengthProgress(userId, "");
-  console.log(progress);
   return progress;
 }

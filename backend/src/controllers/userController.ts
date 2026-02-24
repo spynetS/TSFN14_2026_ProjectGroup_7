@@ -3,7 +3,7 @@ import ApiResponse from "../database/response";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { makeCode } from "./friendsController";
-import { calculateStrength } from "../database/stats";
+import { _calculateStrength } from "../database/stats";
 
 // Added Login
 
@@ -130,7 +130,6 @@ export async function addXp (user:User, xp:number) {
 	user.xp += xp;
 
 	const xp_needed = 100 * ( (user.level ?? 0) ** 2 );
-	console.log(xp_needed)
 	
 	if(user.xp >= xp_needed){
 		user.level ++;

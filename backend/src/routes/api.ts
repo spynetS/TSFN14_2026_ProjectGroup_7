@@ -33,13 +33,13 @@ router.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-router.get("/test", async (req: Request, res: Response) => {
-  const user: User = await User.findOne();
+router.get("/test", async (_req: Request, _res: Response) => {
+  const _user: User = await User.findOne();
 });
 
 router.get("/get-user", (req: Request, res: Response) => {
   try {
-    console.log(req.session.userId);
+//    console.log(req.session.userId);
 
     User.findById(req.session.userId)
       .populate("weightLogs")
