@@ -19,11 +19,11 @@ export function makeCode(): string {
  * Returns the user's friends. Also ensures the caller has a friendCode.
  */
 export async function getFriends(req: Request, res: Response) {
-  const uid = getUserId(req);
+  const uid = req.body.user || getUserId(req);
   if (!uid) return res.status(401).json({ message: "Unauthorized" });
-
+  console.log (uid)
   const me = await User.findById(uid);
-  if (!me) return res.status(404).json({ message: "User not found" });
+  if (me===null|| me===undefined) return res.status(404).json({ message: "User not found" });
 
   // Ensure caller has a friendCode
   if (!me.friendCode) {
@@ -77,7 +77,7 @@ export async function getFriends(req: Request, res: Response) {
  * Adds the user with that friendCode to the caller's friends (bidirectional, idempotent).
  */
 export async function addFriend(req: Request, res: Response) {
-  const uid = getUserId(req);
+  const uid = req.body.user || getUserId(req);
   if (!uid) return res.status(401).json({ message: "Unauthorized" });
 
   const { code } = (req.body || {}) as { code?: string };
