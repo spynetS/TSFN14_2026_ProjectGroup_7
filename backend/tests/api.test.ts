@@ -36,7 +36,7 @@ describe("API Routes", () => {
     describe("POST /api/signup", () => {
         it("should create a new user", async () => {
             const res = await request(app).post("/api/signup").send({
-                name: "newuser",
+                userName: "newuser",
                 email: "new@test.com",
                 password: "pass123"
             });
@@ -46,7 +46,7 @@ describe("API Routes", () => {
         it("should fail with duplicate email", async () => {
             const res = await request(app).post("/api/signup").send({
                 email: "test@test.com",
-                name: "duplicate",
+                userName: "duplicate",
                 password: "pass"
             });
             expect(res.body.status).toBe("fail");
