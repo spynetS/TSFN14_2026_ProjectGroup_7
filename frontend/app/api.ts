@@ -1,6 +1,6 @@
 // api.ts
 
-const BASE_URL = import.meta.env.BACKEND_URL || "http://localhost:3000";
+const BASE_URL = import.meta.env.BACKEND_URL || "http://192.168.49.2:31755";
 
 const defaultHeaders = {
   "Content-Type": "application/json",

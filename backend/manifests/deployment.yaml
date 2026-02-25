@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fittnessduel
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fittnessduel
+  template:
+    metadata:
+      labels:
+        app: fittnessduel
+    spec:
+      containers:
+      - name: fittnessduel-pod
+        image: fittnessduel-backend:1.0.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"
+        - name: DATABASE_URI
+          value: "mongodb://root:example@fittnessduel-mongo:27017/mydb?authSource=admin"
