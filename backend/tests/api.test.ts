@@ -40,7 +40,7 @@ describe("API Routes", () => {
                 email: "new@test.com",
                 password: "pass123"
             });
-            expect(res.statusCode).toBe(200);
+            expect(res.statusCode).toBe(201);
         });
         // DUPLICATE FROM BEFOREEACH
         it("should fail with duplicate email", async () => {
