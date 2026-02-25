@@ -37,20 +37,24 @@ describe("Workout API", () => {
 								exercises: [],
 								weekday:"Monday"
 						});
-
 						expect(res.body.status).toBe("success");
 				})
 				it("should return error if parameters are missing", async () => {
+
+						// We send a body without title which should return an error
 						const res = await agent.post('/api/workout').send({
 								user:userId,
 				 				exercises: [],
 				 				weekday:"Monday"
 				 		});
+
 				 		expect(res.body.status).toBe("error");
 				 		expect(res.body.message).toBe("Workout validation failed: title: Path `title` is required.");
 				})
+				
 				it("should return error user has workouts with same name", async () => {
-						
+						// we create a workout with title test and then try to create it with the
+						// end point which should become an error
 						await Workout.create([{
 								user:userId,
 								title:"test",
@@ -71,7 +75,8 @@ describe("Workout API", () => {
 
 		describe("GET /workout", () => {
 				it("should get all workouts for the user", async () => {
-
+						// we create 2 workouts and expect them to be returned
+						// from the endpoint
 						await Workout.create([{
 								user:userId,
 								title:"test",
@@ -84,11 +89,11 @@ describe("Workout API", () => {
 				 				weekday:"Monday"
 						}])
 
-						const res3 = await agent.get("/api/workout").send({
+						const res = await agent.get("/api/workout").send({
 								user:userId
 						})
-						expect(res3.statusCode).toBe(200)
-						expect(res3.body.data).toHaveLength(2)
+						expect(res.statusCode).toBe(200)
+						expect(res.body.data).toHaveLength(2)
 				})
 		})
 		
