@@ -31,7 +31,8 @@ describe("Set API", () => {
 
 		describe("GET /set", () => {
 				it("should return all sets for the user", async () => {
-						// Seed some sets
+
+						const now = new Date();
 						await Set.create([
 								{
 										reps: 10,
@@ -39,6 +40,7 @@ describe("Set API", () => {
 										duration: 60,
 										user: userId,
 										template: new mongoose.Types.ObjectId(),
+										createdAt: new Date(now.getTime()),
 								},
 								{
 										reps: 8,
@@ -46,6 +48,7 @@ describe("Set API", () => {
 										duration: 50,
 										user: userId,
 										template: new mongoose.Types.ObjectId(),
+										createdAt: new Date(now.getTime() + 1000),
 								},
 						]);
 
