@@ -37,11 +37,16 @@ if (process.env.NODE_ENV === "test") {
 app.use(express.json());
 app.use(cors({ origin: ["http://localhost:5173", "http://127.0.0.1:5173"], credentials: true }));
 
-// TODO : CHECK IF WORKS (LOGGER)
 app.use((req: request, res: Response, next: NextFunction) => {
   logger.info(`${req.method} ${req.url}`);
   next();
 });
+
+app.use((err, req, res, _next) => {
+  logger.error(err.stack); // Log the error stack
+  res.status(500).send('Something went wrong!');
+});
+
 
 app.use("/api", apiRouter);
 
@@ -55,9 +60,12 @@ export default app; // ✅ export app for Supertest
 if (require.main === module) {
   init(process.env.DATABASE_URI!).then(() => {
     app.listen(port, () =>
-      logger.info(`Server running at http://localhost:${port}`),
+      logger.info(`Server running at ${port}`),
     );
   }).catch(error => {
-    logger.error("Could not init database. Have .env?", error);
+			app.listen(port, () =>
+					logger.info(`Server running at ${port}`),
+			);
+			logger.error("Could not init database.", error);
   });
 }

@@ -33,8 +33,9 @@ router.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-router.get("/test", async (_req: Request, _res: Response) => {
-  const _user: User = await User.findOne();
+router.get("/test", async (_req: Request, res: Response) => {
+		const _user: User = await User.findOne();
+		res.json(new ApiResponse({ data: _user }));
 });
 
 router.get("/get-user", (req: Request, res: Response) => {

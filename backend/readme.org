@@ -7,3 +7,15 @@ On the backend we use a MVC pattern.
 - controllers in the *src/controllers*
 
 Each model should have its own view (/route/) and controller.
+
+
+** To deploy on minikube
+
+#+begin_src bash
+minikube start
+eval $(minikube docker-env)
+docker build -t fittnessduel-backend:latest ./
+minikube image load fittnessduel-backend:latest
+kubectl apply -f ./pod.yml
+kubectl apply -f ./service.yml
+#+end_src
