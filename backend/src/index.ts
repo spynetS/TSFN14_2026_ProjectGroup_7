@@ -42,7 +42,7 @@ app.use((req: request, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   logger.error(err.stack); // Log the error stack
   res.status(500).send('Something went wrong!');
 });
