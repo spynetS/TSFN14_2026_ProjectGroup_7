@@ -61,6 +61,7 @@ describe("friend api", () => {
                 it("should return list of friends",async () => {
 
                     user1.friends.push(user2._id as string);
+                    
                     user2.friends.push(user1._id as string);
                     user1.friends.push(user3._id as string);
                     await user1.save();
@@ -73,7 +74,7 @@ describe("friend api", () => {
 
 
                     expect(res.statusCode).toBe(200);
-                    expect(res.body.data.friends).toHaveLength(1);
+                    expect(res.body.data.friends).toHaveLength(2);
                 })
             });
 });
