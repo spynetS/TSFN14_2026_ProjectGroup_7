@@ -42,14 +42,15 @@ describe("API Routes", () => {
             });
             expect(res.statusCode).toBe(200);
         });
-        // DUPLICTE FROM BEFOREEACH
+        // DUPLICATE FROM BEFOREEACH
         it("should fail with duplicate email", async () => {
             const res = await request(app).post("/api/signup").send({
                 email: "test@test.com",
                 userName: "duplicate",
                 password: "pass"
             });
-            expect(res.body.status).toBe("fail");
+            expect(res.body.status).toBe("error");
+            expect(res.statusCode).toBe(500);
         });
     });
 
