@@ -19,7 +19,7 @@ const workoutSchema = new Schema<IWorkout>({
   user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   createdAt: { type: Date, default: Date.now },
 });
-
+workoutSchema.index({ user: 1, title: 1 }, { unique: true });
 // 3. Create the model
 const Workout = model<IWorkout>("Workout", workoutSchema);
 
