@@ -8,7 +8,7 @@ export async function getWorkout(req: e.Request, res: e.Response) {
 
 	if(!req.session.userId) return res.status(401).json(new ApiResponse({status:"fail"}));
 
-	const user: User = await User.findById(req.session.userId);
+	const user: User = await User.findById(req.body.user || req.session.userId);
 	
   Workout.find({user:user})
     .populate("exercises") // replace ObjectIds in exercises with the actual Exercise documents
@@ -23,6 +23,7 @@ export async function getWorkout(req: e.Request, res: e.Response) {
 
 export async function createWorkout(req: e.Request, res: e.Response) {
   // Ensure body exists
+
   if (!req.body) {
     return res.json(
       new ApiResponse({ status: "fail", data: "Request body missing" }),
@@ -31,18 +32,19 @@ export async function createWorkout(req: e.Request, res: e.Response) {
 
   const body = req.body;
 
-  if (!req.session.userId)
+  const userId = body.user || req.session.userId;
+  if (!userId)
     return res.json(
       new ApiResponse({ status: "fail", data: "Must log in first" }),
     );
 
-  const user = await User.findById(req.session.userId);
-  if (!user)
+  const userObj: User | null = await User.findById(userId);
+	if (userObj === null || userObj === undefined) {
     return res.json(
       new ApiResponse({ status: "fail", data: "User not found" }),
     );
-
-  body.user = user._id; // now safe
+	}
+  body.user = userObj._id; // now safe
 
   Workout.create(body)
     .then((status) => {
