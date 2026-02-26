@@ -77,5 +77,18 @@ describe("friend api", () => {
                     expect(res.body.data.friends).toHaveLength(2);
                 })
             });
+          
+
+            describe("Get /addfriend", () =>{
+                it("should add friends both ways",async () => {
+                    const res = await agent.post('/api/friends').send({
+                        user: userId1,
+                        code:user2.friendCode,
+                    });
+
+                    expect(res.statusCode).toBe(201);
+                    expect(res.body.message).toBe("Friend added");
+                });
+            });
 });
 
