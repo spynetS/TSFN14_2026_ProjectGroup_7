@@ -56,16 +56,25 @@ app.get("/", (_req: Request, res: Response) => {
 
 export default app; // ✅ export app for Supertest
 
+const connectDatabase = (times) => {
+
+		if (times > 10){
+				return;
+		}
+
+		times ++;
+		logger.info("Connecting to mongodb");
+		init(process.env.DATABASE_URI!).then(() => {
+				app.listen(port, () =>
+						logger.info(`Server running at ${port}`),
+				);
+		}).catch(error => {
+				logger.error("Could not init database. retying", error);
+				connectDatabase(times)
+		});
+}
+
 // Only start server if running node directly
 if (require.main === module) {
-  init(process.env.DATABASE_URI!).then(() => {
-    app.listen(port, () =>
-      logger.info(`Server running at ${port}`),
-    );
-  }).catch(error => {
-			app.listen(port, () =>
-					logger.info(`Server running at ${port}`),
-			);
-			logger.error("Could not init database.", error);
-  });
+		connectDatabase();
 }
