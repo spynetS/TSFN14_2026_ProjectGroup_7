@@ -20,7 +20,7 @@ describe("Set API", () => {
 						friendCode: "12345",
 				});
 				userId = user._id;
-				// 2. Create an agent and log in to establish a session
+				// 2. Create an agent and login to establish a session
 				agent = request.agent(app);
 				await agent.post("/api/login").send({
 						email: "test@test.com",
