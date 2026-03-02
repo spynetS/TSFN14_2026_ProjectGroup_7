@@ -7,7 +7,7 @@ variable "resource_group_name" {
 }
 
 variable "cluster_name" {
-  default = "fittnessduel-aks"
+  default = "fitnessduel-aks"
 }
 
 variable "node_count" {
@@ -15,7 +15,7 @@ variable "node_count" {
 }
 
 variable "vm_size" {
-  default = "standard_b2s"
+  default = "standard_b2as_v2"
 }
 
 # Optional custom node image ID (Managed Image)
@@ -32,10 +32,10 @@ variable "acr_name_prefix" {
 
 # Container registry info
 variable "acr_name" {
-  default = "fittnessduelacr"
+  default = "fitnessduelacr"
 }
 
 variable "dns_prefix" {
   type    = string
-  default = "fittnessduel"
+  default = "fitnessduel"
 }

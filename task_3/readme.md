@@ -7,7 +7,7 @@ We have implemented terraform for minikube because we had problems with azure. T
 ```bash
 minikube start
 cd backend
-minikube image build -t fittnessduel-backend:1.0.0 ./
+minikube image build -t fitnessduel-backend:latest ./
 cd ../terraform
 terraform init
 terraform apply
@@ -16,7 +16,7 @@ terraform apply
 And to see logs
 
 ```bash
-kubectl logs -f service/fittnessduel-service
+kubectl logs -f service/fitnessduel-service
 ```
 
 And to destroy
