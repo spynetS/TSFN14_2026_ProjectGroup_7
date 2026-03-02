@@ -16,7 +16,7 @@ spec:
       containers:
       - name: fitnessduel-pod
         image: fitnessduel-backend:latest 
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
