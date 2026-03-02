@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: fitnessduel-pod
-        image: fitnessduel-backend:latest 
+        image: task3qkdm9k.azurecr.io/fitnessduel-backend:latest 
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
