@@ -51,7 +51,7 @@ app.use((err, req, res, _next) => {
 app.use("/api", apiRouter);
 
 app.get("/", (_req: Request, res: Response) => {
-  res.json({ message: "API running 🚀" });
+  res.json({ message: "API IS running 🚀" });
 });
 
 export default app; // ✅ export app for Supertest
