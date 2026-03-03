@@ -4,6 +4,29 @@ FitnessDuel is a website where you can track your fitness journey. The main feau
 
 * Run the project
 
+** Kubernetes and azure
+We have a terraform for azure which can be deployed using
+#+BEGIN_SRC bash
+cd terraform
+terraform init
+terraform apply
+#+end_SRC
+
+Build and deploy the image to the container registry
+#+BEGIN_SRC bash
+cd ../backend
+docker build -t <azure_login>/fitnessduel-backend:latest
+docker push
+#+end_SRC
+
+And to deploy the manifests
+(Remeber to login with azure cli)
+
+#+begin_SRC bash
+cd ../manifests
+kubectl apply -f
+#+end_SRC
+
 ** Docker compose
 If you have docker and docker compose installed you can simply run
 #+begin_src bash
@@ -16,7 +39,6 @@ and the frontend will start at
 *localhost:5137*
 
 /It will also start a mongodb server localy which the backend will use/
-
 
 ** Bash
 The backend /Express.js/
@@ -37,7 +59,6 @@ The backend, currently, expects a mongodb server to run on `localhost:27017` wit
 
 * Standards
 We are using the (JSend)[https://github.com/omniti-labs/jsend] standard for the json results from the backend
-
 
 * Features
 ** Create excercises template
