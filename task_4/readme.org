@@ -1,0 +1,18 @@
+* Task 4
+
+** Tests
+We have written a total of 16 tests testing various end points. We have tested so with /good/ data it succeeds and /bad/ data it gives error.
+
+The tests are located in /backend/tests/ and is divided in files depending on the controller.
+
+The tests are run on the main branch and when a pull-request is created into the main branch, which ensures that the code that is merged into main is tested.
+
+
+** Docker build
+
+We used /docker/setup-buildx-action@3/ and /docker/login-action@v3/ in the action to build the image and then push it to azure container registry.
+
+We use github secrets to login to azure to be able to push. 
+The image is built when a new commit appears on the main branch.
+
+
