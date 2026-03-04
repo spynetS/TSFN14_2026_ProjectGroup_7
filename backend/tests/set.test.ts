@@ -31,7 +31,6 @@ describe("Set API", () => {
 
 		describe("GET /set", () => {
 				it("should return all sets for the user", async () => {
-
 						const now = new Date();
 						await Set.create([
 								{
@@ -55,7 +54,7 @@ describe("Set API", () => {
 						const res = await agent.get('/api/set').send({
 								user:userId
 						});
-						
+						// checking so the data return is as asspected
 						expect(res.statusCode).toBe(200);
 						expect(res.body.data).toHaveLength(2);
 						expect(res.body.data[0]).toHaveProperty("reps", 10);
@@ -84,11 +83,11 @@ describe("Set API", () => {
 						});
 
 						expect(res.statusCode).toBe(200);
-						// expect(res.body.data).toHaveProperty("reps", 12);
-						// 
-						// const created = await Set.findOne({ user: userId });
-						// expect(created).not.toBeNull();
-						// expect(created?.weight).toBe(70);
+						expect(res.body.data).toHaveProperty("reps", 12);
+						 
+						const created = await Set.findOne({ user: userId });
+						expect(created).not.toBeNull();
+						expect(created?.weight).toBe(70);
 				});
 		});
 
@@ -107,8 +106,10 @@ describe("Set API", () => {
 								.send({
 										id: set._id.toHexString()
 								});
-
+						
 						expect(res.statusCode).toBe(200);
+
+						// check if the deleted set exists anymore
 						const deleted = await Set.findById(set._id);
 						expect(deleted).toBeNull();
 				});
