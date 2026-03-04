@@ -1,9 +1,10 @@
+// setup file to setup the database for the tests
+
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import app from "../src/index";
 import { init } from "../src/database/database";
 import dotenv from "dotenv";
-
 
 let mongoServer: MongoMemoryServer;
 
