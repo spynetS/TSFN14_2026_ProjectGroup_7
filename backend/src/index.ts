@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "test") {
 } else {
   app.use(
     session({
-      secret: "your-secret-key",
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       store: MongoStore.create({
@@ -54,18 +54,17 @@ app.get("/", (_req: Request, res: Response) => {
   res.json({ message: "API IS running 🚀" });
 });
 
-export default app; // ✅ export app for Supertest
+export default app; // export app for Supertest
 
 // Only start server if running node directly
 if (require.main === module) {
-  init(process.env.DATABASE_URI!).then(() => {
-    app.listen(port, () =>
-      logger.info(`Server running at ${port}`),
-    );
-  }).catch(error => {
-			app.listen(port, () =>
-					logger.info(`Server running at ${port}`),
-			);
-			logger.error("Could not init database.", error);
-  });
+		app.listen(port, () =>
+				logger.info(`Server running at ${port}`),
+		);
+
+		init(process.env.DATABASE_URI!).then(() => {
+				logger.error("Database connected.", error);
+		}).catch(error => {
+				logger.error("Could not init database.", error);
+		});
 }

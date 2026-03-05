@@ -7,6 +7,7 @@ import {
   logWeight,
 } from "../controllers/userController";
 
+import { isDatabaseConnected } from "../database/database";
 import { getStats } from "../controllers/statController";
 import {
   setWeightGoal,
@@ -84,5 +85,23 @@ router.use("/friends", friendsRoutes);
 
 router.get("/notifications", getNotifications);
 router.get("/leaderboard/friends", lbFriends);
+
+// probe
+router.get("/started", (req:Request, res:Response) => {
+		res.status(200).send("OK");
+});
+
+router.get("/alive", (req:Request, res:Response) => {
+		res.status(200).send("OK");
+});
+
+router.get("/ready", (req:Request, res:Response) => {
+		if (isDatabaseConnected()) {
+				res.status(200).send("READY");
+		} else {
+				res.status(500).send("DB NOT CONNECTED");
+		}
+});
+
 
 export default router;

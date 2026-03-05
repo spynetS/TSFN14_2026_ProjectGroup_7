@@ -24,3 +24,27 @@ spec:
           value: "3000"
         - name: DATABASE_URI
           value: "mongodb://root:example@fitnessduel-mongo:27017/mydb?authSource=admin"
+        - name: SESSION_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: SESSION_SECRET
+        startupProbe:
+          httpGet:
+            path: /api/started
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+        livenessProbe:
+          httpGet:
+            path: /api/alive
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10

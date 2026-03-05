@@ -25,6 +25,9 @@ And to deploy the manifests
 #+begin_SRC bash
 cd ../manifests
 kubectl apply -f
+# to create a secret for the session
+kubectl create secret generic backend-secrets \
+  --from-literal=SESSION_SECRET="your-super-secret-salt"
 #+end_SRC
 
 ** Docker compose
