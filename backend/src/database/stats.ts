@@ -1,6 +1,7 @@
 import Set from "../models/Set";
 import User from "../models/User";
 import mongoose from "mongoose";
+import logger from "../utils/logger";
 
 export async function getTotalSessions(userId?: string) {
   const matchStage = userId
@@ -50,7 +51,11 @@ export async function getGoalProgress(
       const progress = await getWeightProgress(userId);
       return progress;
     } catch (_err: Error) {
-      console.error(_err);
+      logger.error("stats.goal-progress.weight.failed", {
+        userId,
+        message: _err.message,
+        stack: _err.stack,
+      });
       return 0;
     }
   }
