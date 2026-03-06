@@ -12,7 +12,13 @@ terraform init
 terraform apply
 #+end_SRC
 
-Build and deploy the image to the container registry
+To get the cridentials for the acr (github secrets)
+#+begin_src bash
+az acr credential show --name fitnessduelacr
+#+end_src
+
+
+Build and deploy the image to the container registry (auto with cicd)
 #+BEGIN_SRC bash
 cd ../backend
 docker build -t <azure_login>/fitnessduel-backend:latest
