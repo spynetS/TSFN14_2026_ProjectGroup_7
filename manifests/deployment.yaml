@@ -24,3 +24,11 @@ spec:
           value: "3000"
         - name: DATABASE_URI
           value: "mongodb://root:example@fitnessduel-mongo:27017/mydb?authSource=admin"
+
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "690m"
+            memory: "256Mi"
