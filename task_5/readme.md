@@ -34,3 +34,8 @@ The Readiness-probe will check if the database is connected and return "READY" i
 A screenshot of the probes working correctly is found at "./propes_on_azure.png"
 
 If the probes fail Kubernetes will try to restart the pods.
+
+
+## Logs
+
+Within the "./azure_live_logs.png" screenshot you can see logs are being produces live and can be observable. :)
