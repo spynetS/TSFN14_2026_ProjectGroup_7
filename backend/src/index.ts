@@ -37,22 +37,47 @@ if (process.env.NODE_ENV === "test") {
 app.use(express.json());
 app.use(cors({ origin: ["http://localhost:5173", "http://127.0.0.1:5173"], credentials: true }));
 
-app.use((req: request, res: Response, next: NextFunction) => {
-  logger.info(`${req.method} ${req.url}`);
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const start = Date.now();
+  logger.info("request.received", {
+    method: req.method,
+    path: req.originalUrl,
+    ip: req.ip,
+    userId: req.session?.userId,
+  });
+
+  res.on("finish", () => {
+    logger.info("request.completed", {
+      method: req.method,
+      path: req.originalUrl,
+      statusCode: res.statusCode,
+      durationMs: Date.now() - start,
+      userId: req.session?.userId,
+    });
+  });
+
   next();
 });
-
-app.use((err, req, res, _next) => {
-  logger.error(err.stack); // Log the error stack
-  res.status(500).send('Something went wrong!');
-});
-
 
 app.use("/api", apiRouter);
 
 app.get("/", (_req: Request, res: Response) => {
   res.json({ message: "API is running 🚀" });
 });
+
+
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
+  logger.error("request.failed", {
+    method: req.method,
+    path: req.originalUrl,
+    userId: req.session?.userId,
+    message: err.message,
+    stack: err.stack,
+  });
+  if (res.headersSent) return;
+  res.status(500).json({ message: "Something went wrong!" });
+});
+
 
 export default app; // export app for Supertest
 
@@ -67,4 +92,5 @@ if (require.main === module) {
 		}).catch(error => {
 				logger.error("Could not init database.", error);
 		});
+
 }

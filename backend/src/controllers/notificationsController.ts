@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import ApiResponse from "../database/response";
 import Set from "../models/Set";                 // <-- adjust path if needed
 import User from "../models/User";               // already in your repo
+import logger from "../utils/logger";
 
 function startOfToday() {
   const d = new Date();
@@ -19,10 +20,13 @@ export async function getNotifications(req: Request, res: Response) {
   try {
     const userId = req.session?.userId as string | undefined;
     if (!userId) {
+      logger.warn("notifications.get.unauthorized");
       return res
         .status(401)
         .json(new ApiResponse({ status: "fail", message: "Not logged in", data: [] }));
     }
+
+    logger.info("notifications.get.started", { userId });
 
     const start = startOfToday();
     const end = endOfToday();
@@ -69,9 +73,17 @@ export async function getNotifications(req: Request, res: Response) {
       // }
     }
 
+    logger.info("notifications.get.completed", {
+      userId,
+      notificationsCount: notifications.length,
+    });
+
     return res.json(new ApiResponse({ data: notifications }));
   } catch (err: Error) {
-    console.error(err);
+    logger.error("notifications.get.failed", {
+      message: err.message,
+      stack: err.stack,
+    });
     return res
       .status(500)
       .json(new ApiResponse({ status: "error", message: err.message, data: [] }));

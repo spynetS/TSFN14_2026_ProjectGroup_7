@@ -4,6 +4,7 @@ import User from "../models/User";
 import mongoose from "mongoose";
 import Set from "../models/Set";
 import ApiResponse from "../database/response";
+import logger from "../utils/logger";
 
 function getUserId(req: Request): string | undefined {
   return req.session.userId;
@@ -20,15 +21,24 @@ export function makeCode(): string {
  */
 export async function getFriends(req: Request, res: Response) {
   const uid = req.body.user || getUserId(req);
-  if (!uid) return res.status(401).json({ message: "Unauthorized" });
-  console.log (uid)
+  if (!uid) {
+    logger.warn("friends.get.unauthorized");
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  logger.info("friends.get.started", { userId: uid });
+
   const me = await User.findById(uid);
-  if (me===null|| me===undefined) return res.status(404).json({ message: "User not found" });
+  if (me===null|| me===undefined) {
+    logger.warn("friends.get.user-not-found", { userId: uid });
+    return res.status(404).json({ message: "User not found" });
+  }
 
   // Ensure caller has a friendCode
   if (!me.friendCode) {
     me.friendCode = makeCode();
     await me.save();
+    logger.info("friends.get.friend-code-created", { userId: uid });
   }
 
   function startOfToday() {
@@ -78,25 +88,41 @@ export async function getFriends(req: Request, res: Response) {
  */
 export async function addFriend(req: Request, res: Response) {
   const uid = req.body.user || getUserId(req);
-  if (!uid) return res.status(401).json({ message: "Unauthorized" });
+  if (!uid) {
+    logger.warn("friends.add.unauthorized");
+    return res.status(401).json({ message: "Unauthorized" });
+  }
 
   const { code } = (req.body || {}) as { code?: string };
-  if (!code) return res.status(400).json({ message: "Friend code required" });
+  if (!code) {
+    logger.warn("friends.add.code-missing", { userId: uid });
+    return res.status(400).json({ message: "Friend code required" });
+  }
+
+  logger.info("friends.add.started", { userId: uid, code: code.trim() });
 
   const me = await User.findById(uid);
-  if (!me) return res.status(404).json({ message: "User not found" });
+  if (!me) {
+    logger.warn("friends.add.user-not-found", { userId: uid });
+    return res.status(404).json({ message: "User not found" });
+  }
 
   // Ensure the caller has a code (first-time)
   if (!me.friendCode) {
     me.friendCode = makeCode();
     await me.save();
+    logger.info("friends.add.friend-code-created", { userId: uid });
   }
 
   const other = await User.findOne({ friendCode: code.trim() });
-  if (!other)
+  if (!other) {
+    logger.warn("friends.add.target-not-found", { userId: uid, code: code.trim() });
     return res.status(404).json({ message: "No user with that code" });
-  if (String(other._id) === String(me._id))
+  }
+  if (String(other._id) === String(me._id)) {
+    logger.warn("friends.add.self", { userId: uid });
     return res.status(400).json({ message: "You can’t add yourself" });
+  }
 
   // Add both ways (idempotent)
   const meHas = me.friends?.some((id: string) => String(id) === String(other._id));
@@ -109,6 +135,13 @@ export async function addFriend(req: Request, res: Response) {
 
   await me.save();
   await other.save();
+
+  logger.info("friends.add.completed", {
+    userId: uid,
+    friendId: String(other._id),
+    createdMeEdge: !meHas,
+    createdOtherEdge: !otherHas,
+  });
 
   return res.status(201).json({ message: "Friend added" });
 }
