@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "test") {
 } else {
   app.use(
     session({
-      secret: "your-secret-key",
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       store: MongoStore.create({
@@ -62,8 +62,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use("/api", apiRouter);
 
 app.get("/", (_req: Request, res: Response) => {
-  res.json({ message: "API IS running 🚀" });
+  res.json({ message: "API is running 🚀" });
 });
+
 
 app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   logger.error("request.failed", {
@@ -77,21 +78,19 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-export default app; // ✅ export app for Supertest
+
+export default app; // export app for Supertest
 
 // Only start server if running node directly
 if (require.main === module) {
-  init(process.env.DATABASE_URI!).then(() => {
-    app.listen(port, () =>
-      logger.info("server.started", { port }),
-    );
-  }).catch(error => {
-    app.listen(port, () =>
-      logger.info("server.started.without-db", { port }),
-    );
-    logger.error("database.init.failed", {
-      message: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined,
-    });
-  });
+		app.listen(port, () =>
+				logger.info(`Server running at ${port}`),
+		);
+
+		init(process.env.DATABASE_URI!).then(() => {
+				logger.error("Database connected.", error);
+		}).catch(error => {
+				logger.error("Could not init database.", error);
+		});
+
 }
