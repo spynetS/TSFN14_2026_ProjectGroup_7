@@ -11,7 +11,7 @@ resource "random_string" "suffix" {
 
 
 resource "azurerm_container_registry" "acr" {
-  name                = "${var.acr_name_prefix}${random_string.suffix.result}" # unikt
+  name                = var.acr_name
   resource_group_name = azurerm_resource_group.rg.name 
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"

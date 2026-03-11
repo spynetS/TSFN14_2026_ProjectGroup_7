@@ -12,7 +12,13 @@ terraform init
 terraform apply
 #+end_SRC
 
-Build and deploy the image to the container registry
+To get the cridentials for the acr (github secrets)
+#+begin_src bash
+az acr credential show --name fitnessduelacr
+#+end_src
+
+
+Build and deploy the image to the container registry (auto with cicd)
 #+BEGIN_SRC bash
 cd ../backend
 docker build -t <azure_login>/fitnessduel-backend:latest
@@ -25,6 +31,9 @@ And to deploy the manifests
 #+begin_SRC bash
 cd ../manifests
 kubectl apply -f
+# to create a secret for the session
+kubectl create secret generic backend-secrets \
+  --from-literal=SESSION_SECRET="your-super-secret-salt"
 #+end_SRC
 
 ** Docker compose
