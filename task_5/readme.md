@@ -39,3 +39,9 @@ If the probes fail Kubernetes will try to restart the pods.
 ## Logs
 
 Within the "./azure_live_logs.png" screenshot you can see logs are being produces live and can be observable. :)
+
+
+## Horizontal Pod Autoscaler (HPA)
+Scaling happens when the application gets more load than the current pod setup can handle well. 
+Kubernetes then starts more pods to spread the work and keep the service responsive. 
+In our case, the deployment can scale from 1 up to 5 pods depending on demand.
