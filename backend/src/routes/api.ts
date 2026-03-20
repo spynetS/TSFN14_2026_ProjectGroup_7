@@ -41,9 +41,11 @@ router.get("/test", async (_req: Request, res: Response) => {
 
 router.get("/get-user", (req: Request, res: Response) => {
   try {
-//    console.log(req.session.userId);
+			const userId = req.query.userId as string || req.session.userId;
+			
+			if (!userId || userId === undefined ) res.json(new ApiResponse({status:"fail", data:"No userId was provided"}));
 
-    User.findById(req.session.userId)
+			User.findById(userId)
       .populate("weightLogs")
       .populate("friends")
       .then((users) => {

@@ -78,14 +78,14 @@ export async function userCreate(req: Request, res: Response) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.create({
+    const user = await User.create({
       name: userName,
       email: email,
       password: hashedPassword,
       friendCode: makeCode(),
     });
 
-    res.status(201).json(new ApiResponse({ data: "User added successfully" }));
+    res.status(201).json(new ApiResponse({ data: { "msg" : "User added successfully", "userId": user.id } }));
   } catch (error: Error) {
     res
       .status(500)

@@ -88,9 +88,9 @@ if (require.main === module) {
 		);
 
 		init(process.env.DATABASE_URI!).then(() => {
-				logger.error("Database connected.", error);
+				logger.log("Database connected.");
 		}).catch(error => {
-				logger.error("Could not init database.", error);
+				logger.error("Could not init database." + process.env.DATABASE_URI!, error);
 		});
 
 }
