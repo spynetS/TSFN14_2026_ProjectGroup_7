@@ -37,20 +37,20 @@ spec:
             path: /api/started
             port: 3000
           initialDelaySeconds: 5
-          periodSeconds: 5
+          periodSeconds: 30
         readinessProbe:
           httpGet:
             path: /api/ready
             port: 3000
           initialDelaySeconds: 5
-          periodSeconds: 5
+          periodSeconds: 30
 
         livenessProbe:
           httpGet:
             path: /api/alive
             port: 3000
           initialDelaySeconds: 10
-          periodSeconds: 10
+          periodSeconds: 100
 
         resources:
           requests:

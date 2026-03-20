@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+/api/test,183265,47,4,1852,45.81,0.025%,1013.89742,343.15,158.38,346.6
+TOTAL,183265,47,4,1852,45.81,0.025%,1013.89742,343.15,158.38,346.6
